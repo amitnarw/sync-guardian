@@ -90,3 +90,27 @@ If you forget the "filter name", look at the `"name"` field in that folder's `pa
 *   `apps/backend` → `@sync-guardian/backend`
 *   `apps/mobile` → `@sync-guardian/mobile`
 *   `packages/shared` → `@sync-guardian/shared`
+
+---
+
+## 6. The "Final Exam" (Building)
+
+While `dev` shows you things are working, `build` proves everything is correct. It checks all types and compiles the code.
+
+| Goal | Command |
+| :--- | :--- |
+| **Build EVERYTHING** | `pnpm build` |
+| **Build only Backend** | `pnpm build:backend` |
+| **Build only Mobile** | `pnpm build:mobile` |
+
+> [!IMPORTANT]
+> **Why build?**
+> If you change a type in `shared` that breaks the `backend`, you might not see the error in `dev` until you visit that specific file. `pnpm build` will find EVERY error across EVERY app instantly.
+
+---
+
+## 7. Deployment Summary
+
+*   **Backend:** extracted via `pnpm deploy --filter backend out/backend` then pushed to a server.
+*   **Mobile:** handled via `eas build`.
+*   **Frontend:** will be deployed as static files or to a host like Vercel.

@@ -4,24 +4,29 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --background: #fbfbe2;
+    --foreground: #1b1d0e;
+    --primary: #486730;
+    --secondary: #9f402d;
+    --surface: #fbfbe2;
+    --surface-container: #efefd7;
+    --surface-container-low: #f5f5dc;
+    --surface-container-high: #eaead1;
+    --surface-container-highest: #e4e4cc;
+    --outline: #74796c;
+    --text: #1b1d0e;
+  }
+  .dark {
+    --background: #1b1d0e;
+    --foreground: #fbfbe2;
+    --primary: #87a96b;
+    --secondary: #ffb4a5;
+    --surface: #1b1d0e;
+    --surface-container: #303221;
+    --surface-container-low: #43483d;
+    --surface-container-high: #43483d;
+    --surface-container-highest: #43483d;
+    --outline: #c4c8ba;
+    --text: #fbfbe2;
   }
 }

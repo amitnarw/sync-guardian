@@ -6,6 +6,10 @@
   "scripts": {
     "dev:backend": "pnpm --filter @sync-guardian/backend dev",
     "dev:mobile": "pnpm --filter @sync-guardian/mobile start",
+    "build": "pnpm -r build",
+    "build:backend": "pnpm -F backend build",
+    "build:mobile": "pnpm -F mobile build",
+    "build:shared": "pnpm -F shared build",
     "lint": "pnpm -r lint",
     "clean": "pnpm -r exec rimraf node_modules && rimraf node_modules"
   },

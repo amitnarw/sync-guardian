@@ -1,7 +1,9 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { MotiView } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 interface PillButtonProps {
   title: string;
@@ -10,6 +12,9 @@ interface PillButtonProps {
 }
 
 export function PillButton({ title, onPress, className = "" }: PillButtonProps) {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? 'light'];
+
   return (
     <Pressable onPress={onPress}>
       {({ pressed }: { pressed: boolean }) => (
@@ -19,7 +24,7 @@ export function PillButton({ title, onPress, className = "" }: PillButtonProps) 
           className={`rounded-full overflow-hidden ${className}`}
         >
           <LinearGradient
-            colors={['#10B981', '#059669']} // Example theme colors
+            colors={[theme.primary, theme.primaryContainer || theme.primary]} 
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             className="px-8 py-4 items-center justify-center"

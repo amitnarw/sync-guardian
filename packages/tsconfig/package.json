@@ -1,0 +1,13 @@
+{
+  "name": "@sync-guardian/tsconfig",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./base.json": "./base.json",
+    "./node.json": "./node.json"
+  },
+  "files": [
+    "base.json",
+    "node.json"
+  ]
+}

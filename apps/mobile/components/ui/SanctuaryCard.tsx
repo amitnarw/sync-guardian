@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { MotiView } from 'moti';
 
 interface SanctuaryCardProps {
@@ -11,11 +10,11 @@ interface SanctuaryCardProps {
 export function SanctuaryCard({ children, variant = 'low', className = "" }: SanctuaryCardProps) {
   const getBackgroundColor = () => {
     switch (variant) {
-      case 'low': return 'bg-[#F2F4F7] dark:bg-[#1C1C1E]';
-      case 'high': return 'bg-[#E5E9F0] dark:bg-[#2C2C2E]';
-      case 'highest': return 'bg-[#D1D9E6] dark:bg-[#3A3A3C]';
-      case 'lowest': return 'bg-white dark:bg-[#0A0A0A]';
-      default: return 'bg-[#F2F4F7]';
+      case 'low': return 'bg-surface-container-low';
+      case 'high': return 'bg-surface-container-high';
+      case 'highest': return 'bg-surface-container-highest';
+      case 'lowest': return 'bg-surface';
+      default: return 'bg-surface-container-low';
     }
   };
 

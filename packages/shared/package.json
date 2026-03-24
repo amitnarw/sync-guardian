@@ -2,12 +2,19 @@
   "name": "@sync-guardian/shared",
   "version": "1.0.0",
   "private": true,
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
-  "scripts": {
-    "lint": "echo \"No lint configured yet\""
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
   },
-  "files": [
-    "src"
-  ]
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@sync-guardian/tsconfig": "workspace:*",
+    "typescript": "^5.0.0"
+  }
 }

@@ -2,17 +2,15 @@
   "name": "@sync-guardian/backend",
   "version": "1.0.0",
   "private": true,
-  "description": "SyncGuardian API server",
-  "main": "server.js",
+  "description": "SyncGuardian API server (TypeScript)",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "node --watch server.js",
-    "start": "node server.js",
-    "lint": "echo \"No lint configured yet\""
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "lint": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@sync-guardian/shared": "workspace:*",
     "axios": "^1.13.6",
@@ -20,5 +18,13 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "firebase-admin": "^13.7.0"
+  },
+  "devDependencies": {
+    "@sync-guardian/tsconfig": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0"
   }
 }
