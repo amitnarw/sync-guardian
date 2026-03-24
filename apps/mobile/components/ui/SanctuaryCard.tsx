@@ -3,7 +3,7 @@ import { MotiView } from 'moti';
 
 interface SanctuaryCardProps {
   children: React.ReactNode;
-  variant?: 'low' | 'high' | 'highest' | 'lowest';
+  variant?: 'low' | 'high' | 'highest' | 'lowest' | 'container';
   className?: string;
 }
 
@@ -11,9 +11,10 @@ export function SanctuaryCard({ children, variant = 'low', className = "" }: San
   const getBackgroundColor = () => {
     switch (variant) {
       case 'low': return 'bg-surface-container-low';
+      case 'container': return 'bg-surface-container';
       case 'high': return 'bg-surface-container-high';
       case 'highest': return 'bg-surface-container-highest';
-      case 'lowest': return 'bg-surface';
+      case 'lowest': return 'bg-surface-container-lowest';
       default: return 'bg-surface-container-low';
     }
   };

@@ -1,65 +1,234 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MotiView } from 'moti';
+import { LinearGradient } from 'expo-linear-gradient';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
+import { NurturingHeader } from '@/components/ui/NurturingHeader';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+
+/**
+ * INSIGHTS hearth shape
+ * CSS: border-radius: 60% 40% 70% 30% / 40% 50% 60% 70%
+ * Horizontal per-corner values for a 256px box:
+ *   TL=60%→154, TR=40%→102, BR=70%→179, BL=30%→77
+ */
+const I_SIZE = 256;   // outer container
+const I_INNER = 224;  // inset: 256 - 16*2 (inset-4 = 16px each side)
+const I_RADIUS = {
+  borderTopLeftRadius: 154,
+  borderTopRightRadius: 102,
+  borderBottomRightRadius: 179,
+  borderBottomLeftRadius: 77,
+};
+const I_INNER_RADIUS = {
+  borderTopLeftRadius: Math.round(154 * I_INNER / I_SIZE),
+  borderTopRightRadius: Math.round(102 * I_INNER / I_SIZE),
+  borderBottomRightRadius: Math.round(179 * I_INNER / I_SIZE),
+  borderBottomLeftRadius: Math.round(77  * I_INNER / I_SIZE),
+};
+
+
+const BAR_HEIGHTS = [0.17, 0.08, 0.13, 0.25, 0.42, 0.67, 1, 0.83, 0.58, 0.42, 0.5, 0.67, 0.92, 0.67, 0.33, 0.5, 0.83, 0.58, 0.42, 0.33, 0.17, 0.25, 0.13, 0.08];
+const FOCUS_BARS = [0.5, 0.67, 0.75, 0.5, 1, 0.67, 0.5];
+const NURTURED_APPS = [
+  { icon: 'menu_book', label: 'Learning Portal', time: '2h 14m today', bg: 'bg-primary-container', color: 'var(--primary)' },
+  { icon: 'palette', label: 'Creative Studio', time: '1h 45m today', bg: 'bg-secondary-container', color: 'var(--secondary)' },
+  { icon: 'mindfulness', label: 'Quiet Space', time: '48m today', bg: 'bg-tertiary-container', color: 'var(--tertiary)' },
+];
 
 export default function InsightsScreen() {
-  const activityData = [40, 60, 30, 80, 50, 70, 45]; // Mock data for bar chart
+  const { width } = Dimensions.get('window');
+  const heatmapBarW = Math.floor((width - 48 - 23) / 24);
 
   return (
-    <ThemedView className="flex-1">
+    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
-        <ScrollView 
-          contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 40 }} 
+        <NurturingHeader />
+        <ScrollView
+          contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
         >
-          <View className="mb-8">
-            <ThemedText type="display">Family Rhythm</ThemedText>
-            <ThemedText type="headline" className="opacity-70">Insights from the last 7 days</ThemedText>
+          {/* Hero */}
+          <View className="py-6 items-center gap-4 mb-4">
+            <ThemedText className="text-xs tracking-widest text-secondary uppercase font-semibold" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>
+              Your Perspective
+            </ThemedText>
+            <ThemedText className="text-on-background text-center leading-tight" style={{ fontFamily: 'PlusJakartaSans-Bold', fontSize: 36, lineHeight: 42 }}>
+              Weekly Rhythm
+            </ThemedText>
+            <ThemedText className="text-on-surface-variant text-center text-base max-w-xs">
+              A gentle reflection of digital habits and mindful connections over the last seven days.
+            </ThemedText>
+
+            {/* Hearth blob — outer halo + inner gradient shape */}
+            <View style={{ width: I_SIZE, height: I_SIZE, alignItems: 'center', justifyContent: 'center', marginTop: 8 }}>
+              {/* Outer pulsing halo (inset-0, opacity-20, animate-pulse) */}
+              <MotiView
+                from={{ opacity: 0.20 }}
+                animate={{ opacity: 0.08 }}
+                transition={{ type: 'timing', duration: 1500, loop: true }}
+                style={[I_RADIUS, { position: 'absolute', width: I_SIZE, height: I_SIZE, overflow: 'hidden' }]}
+              >
+                <LinearGradient
+                  colors={['#44674d', '#c5eccc']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={StyleSheet.absoluteFillObject}
+                />
+              </MotiView>
+
+              {/* Inner shape (absolute inset-4 = 16px each side) */}
+              <View
+                style={[
+                  I_INNER_RADIUS,
+                  {
+                    position: 'absolute',
+                    width: I_INNER,
+                    height: I_INNER,
+                    overflow: 'hidden',
+                    shadowColor: '#44674d',
+                    shadowOffset: { width: 0, height: 8 },
+                    shadowOpacity: 0.30,
+                    shadowRadius: 20,
+                    elevation: 12,
+                  },
+                ]}
+              >
+                <LinearGradient
+                  colors={['#44674d', '#c5eccc']}
+                  start={{ x: 0, y: 0 }}  // bg-gradient-to-br
+                  end={{ x: 1, y: 1 }}
+                  style={StyleSheet.absoluteFillObject}
+                />
+                <View style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center', gap: 6 }]}>
+                  <IconSymbol name="eco" size={44} color="white" />
+                  <ThemedText style={{ color: 'white', fontSize: 30, fontFamily: 'PlusJakartaSans-Bold', lineHeight: 34 }}>84%</ThemedText>
+                  <ThemedText style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, letterSpacing: 1.5, fontFamily: 'PlusJakartaSans-Bold' }}>CALM ALIGNMENT</ThemedText>
+                </View>
+              </View>
+            </View>
           </View>
 
-          {/* Activity Chart */}
-          <SanctuaryCard variant="low" className="mb-6">
-            <ThemedText type="subtitle" className="mb-6">Daily Activity</ThemedText>
-            <View className="flex-row items-end justify-between h-[150px] px-2">
-              {activityData.map((val, i) => (
-                <View key={i} className="items-center gap-2">
-                  <View 
-                    className="w-6 rounded-full bg-primary/40" 
-                    style={{ height: val * 1.5 }} 
-                  />
-                  <ThemedText className="text-xs opacity-50">
-                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}
-                  </ThemedText>
-                </View>
+          {/* Calm Focus Card */}
+          <SanctuaryCard variant="lowest" className="p-6 mb-4 overflow-hidden relative">
+            {/* Accent blob */}
+            <View className="absolute -right-12 -top-12 w-48 h-48 bg-tertiary-container/30 rounded-full" />
+            <View className="relative z-10">
+              <ThemedText className="text-lg font-bold text-on-surface mb-2" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>
+                Calm Focus Observed
+              </ThemedText>
+              <ThemedText className="text-on-surface-variant leading-relaxed text-sm">
+                There was a significant 12% increase in uninterrupted focus sessions between 4 PM and 7 PM. The household atmosphere felt particularly grounded.
+              </ThemedText>
+            </View>
+            {/* Mini bar chart */}
+            <View className="flex-row items-end gap-2 mt-6" style={{ height: 80 }}>
+              {FOCUS_BARS.map((h, i) => (
+                <MotiView
+                  key={i}
+                  from={{ height: 0 }}
+                  animate={{ height: h * 80 }}
+                  transition={{ type: 'spring', delay: i * 60 }}
+                  className="flex-1 bg-primary/40 rounded-t-full"
+                  style={{ opacity: 0.3 + h * 0.7 }}
+                />
               ))}
             </View>
           </SanctuaryCard>
 
-          {/* Detailed Stats */}
-          <View className="flex-row gap-4 mb-8">
-            <SanctuaryCard variant="high" className="flex-1 gap-2">
-              <ThemedText type="defaultSemiBold">Focus Time</ThemedText>
-              <ThemedText type="title">18h 40m</ThemedText>
-            </SanctuaryCard>
-            <SanctuaryCard variant="high" className="flex-1 gap-2">
-              <ThemedText type="defaultSemiBold">Social</ThemedText>
-              <ThemedText type="title">4h 15m</ThemedText>
-            </SanctuaryCard>
-          </View>
-
-          {/* Wellness Suggestions */}
-          <ThemedText type="subtitle" className="mb-4">Digital Wellness</ThemedText>
-          <SanctuaryCard variant="lowest" className="gap-2 border-r-4 border-secondary">
-            <ThemedText type="defaultSemiBold" className="text-secondary">Tip of the day</ThemedText>
-            <ThemedText className="leading-snug opacity-80">
-              Setting a 'Digital Sunset' 30 minutes before bedtime can improve sleep quality for the whole family.
+          {/* Gentle Notifications radial */}
+          <SanctuaryCard variant="high" className="p-6 mb-4 items-center">
+            <ThemedText className="text-lg font-bold text-on-surface mb-5" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>
+              Gentle Notifications
+            </ThemedText>
+            {/* Pure-RN radial arc: two half-circle masks */}
+            <View style={{ width: 144, height: 144, position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+              {/* Track ring */}
+              <View style={{
+                position: 'absolute', width: 144, height: 144,
+                borderRadius: 72, borderWidth: 10,
+                borderColor: '#f5ede0',
+              }} />
+              {/* Progress: ~57% (120/283 ≈ 42% empty → 58% filled) */}
+              {/* Left half (shows ~180° of the near side) */}
+              <View style={{ position: 'absolute', width: 144, height: 144, overflow: 'hidden' }}>
+                <View style={{
+                  width: 144, height: 144, borderRadius: 72,
+                  borderWidth: 10, borderColor: '#a0412d',
+                  borderRightColor: 'transparent', borderBottomColor: 'transparent',
+                  transform: [{ rotate: '-45deg' }],
+                }} />
+              </View>
+              {/* Right half mask (covers right side partially) */}
+              <View style={{ position: 'absolute', width: 72, height: 144, right: 0, overflow: 'hidden' }}>
+                <View style={{
+                  width: 144, height: 144, borderRadius: 72,
+                  borderWidth: 10, borderColor: '#a0412d',
+                  borderLeftColor: 'transparent', borderTopColor: 'transparent',
+                  transform: [{ rotate: '0deg' }],
+                }} />
+              </View>
+              <View style={{ position: 'absolute', alignItems: 'center', justifyContent: 'center' }}>
+                <ThemedText className="text-2xl font-bold text-on-surface" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>42</ThemedText>
+                <ThemedText className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Daily Avg</ThemedText>
+              </View>
+            </View>
+            <ThemedText className="mt-5 text-sm text-on-surface-variant italic text-center">
+              "30% fewer than last week's peaks."
             </ThemedText>
           </SanctuaryCard>
 
-          <View className="h-[120px]" />
+          {/* Daily Energy Flow Heatmap */}
+          <SanctuaryCard variant="low" className="p-6 mb-4">
+            <View className="flex-row justify-between items-end mb-5">
+              <View>
+                <ThemedText className="text-lg font-bold text-on-surface" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>Daily Energy Flow</ThemedText>
+                <ThemedText className="text-sm text-on-surface-variant">Activity intensity by time of day</ThemedText>
+              </View>
+              <View className="flex-row gap-2">
+                <View className="w-3 h-3 rounded-full bg-primary" />
+                <View className="w-3 h-3 rounded-full bg-primary opacity-60" />
+                <View className="w-3 h-3 rounded-full bg-primary opacity-20" />
+              </View>
+            </View>
+            {/* Heatmap bars */}
+            <View className="flex-row items-end" style={{ height: 72, gap: 2 }}>
+              {BAR_HEIGHTS.map((h, i) => {
+                const opacity = Math.max(0.05, h);
+                const isSecondary = i === 16;
+                return (
+                  <View
+                    key={i}
+                    style={{ flex: 1, height: h * 72, borderRadius: 2, backgroundColor: isSecondary ? `rgba(160,65,45,${opacity})` : `rgba(68,103,77,${opacity})` }}
+                  />
+                );
+              })}
+            </View>
+            <View className="flex-row justify-between mt-2 px-0.5">
+              {['12am', '6am', '12pm', '6pm', '12am'].map((l) => (
+                <ThemedText key={l} className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{l}</ThemedText>
+              ))}
+            </View>
+          </SanctuaryCard>
+
+          {/* Nurtured Apps */}
+          <View className="gap-3">
+            <ThemedText className="text-lg font-bold text-on-surface px-1" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>Nurtured Apps</ThemedText>
+            {NURTURED_APPS.map((app, i) => (
+              <SanctuaryCard key={i} variant="lowest" className="p-4 flex-row items-center gap-4">
+                <View className={`w-12 h-12 ${app.bg} rounded-lg items-center justify-center`}>
+                  <IconSymbol name={app.icon as any} size={22} color={app.color} />
+                </View>
+                <View>
+                  <ThemedText className="font-bold text-sm text-on-surface" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>{app.label}</ThemedText>
+                  <ThemedText className="text-xs text-on-surface-variant">{app.time}</ThemedText>
+                </View>
+              </SanctuaryCard>
+            ))}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </ThemedView>

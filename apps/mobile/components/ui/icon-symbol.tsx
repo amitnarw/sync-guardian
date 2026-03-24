@@ -6,7 +6,7 @@ import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 import { cssInterop } from 'react-native-css-interop';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
+type IconMapping = Record<string, ComponentProps<typeof MaterialIcons>['name']>;
 type IconSymbolName = keyof typeof MAPPING;
 
 /**
@@ -19,6 +19,50 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
+  'sun.max.fill': 'light-mode',
+  'moon.fill': 'dark-mode',
+  'moon.zzz.fill': 'nights-stay',
+  'heart.fill': 'favorite',
+  'thermometer.medium': 'device-thermostat',
+  'cup.and.saucer.fill': 'coffee',
+  'sparkles': 'auto-awesome',
+  'chart.bar.fill': 'bar-chart',
+  'bell.fill': 'notifications',
+  'person.fill': 'person',
+  'leaf.fill': 'eco',
+  'person.2.fill': 'people',
+  'creditcard.fill': 'credit-card',
+  'lock.fill': 'lock',
+  'paintbrush.fill': 'brush',
+  'gearshape.fill': 'settings',
+  'checkmark.shield.fill': 'verified',
+  'timer': 'timer',
+  'app.badge': 'apps',
+  'calendar': 'calendar-today',
+  'star.fill': 'star',
+  'notifications_active': 'notifications-active',
+  'bedtime': 'nights-stay',
+  'favorite': 'favorite',
+  'device_thermostat': 'device-thermostat',
+  'restaurant': 'restaurant',
+  'wash': 'wash',
+  'history_edu': 'history-edu',
+  'tips_and_updates': 'tips-and-updates',
+  'dashboard': 'dashboard',
+  'analytics': 'analytics',
+  'insights': 'insights',
+  'gavel': 'gavel',
+  'settings': 'settings',
+  'search': 'search',
+  'auto_awesome': 'auto-awesome',
+  'calendar_today': 'calendar-today',
+  'forum': 'forum',
+  'history': 'history',
+  'chevron_right': 'chevron-right',
+  'auto_stories': 'auto-stories',
+  'verified_user': 'verified-user',
+  'battery_charging_80': 'battery-charging-full',
+  'location_on': 'place',
 } as IconMapping;
 
 cssInterop(MaterialIcons, {

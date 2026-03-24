@@ -38,7 +38,7 @@ export default function TabLayout() {
             style={[
               StyleSheet.absoluteFill,
               {
-                backgroundColor: colorScheme === 'dark' ? 'rgba(27, 29, 14, 0.7)' : 'rgba(251, 251, 226, 0.7)',
+                backgroundColor: colorScheme === 'dark' ? 'rgba(16, 14, 9, 0.7)' : 'rgba(255, 255, 255, 0.7)',
               },
             ]}
           />
@@ -48,28 +48,35 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Dashboard',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="dashboard" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          title: 'Activity',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="analytics" color={color} />,
         }}
       />
       <Tabs.Screen
         name="insights"
         options={{
           title: 'Insights',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="insights" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="rules"
         options={{
-          title: 'Alerts',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.right" color={color} />,
+          title: 'Rules',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gavel" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.left.forwardslash.chevron.right" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="settings" color={color} />,
         }}
       />
     </Tabs>

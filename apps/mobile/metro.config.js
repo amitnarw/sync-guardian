@@ -18,7 +18,7 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
-// 3. Force Metro to resolve (sub)dependencies only from our `node_modules`
-config.resolver.disableHierarchicalLookup = true;
+// 3. Let Metro lookup dependencies hierarchically
+config.resolver.disableHierarchicalLookup = false;
 
 module.exports = withNativeWind(config, { input: './global.css' });

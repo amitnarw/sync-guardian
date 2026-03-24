@@ -1,69 +1,165 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MotiView } from 'moti';
-import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { NurturingHeader } from '@/components/ui/NurturingHeader';
+
+type NotifItem = {
+  icon: string;
+  iconColor: string;
+  iconBg: string;
+  title: string;
+  time: string;
+  body: string;
+  cardClass?: string;
+};
+
+type Group = {
+  label: string;
+  dotColor: string;
+  badge?: string;
+  items: NotifItem[];
+};
+
+const groups: Group[] = [
+  {
+    label: 'Learning Journey',
+    dotColor: 'bg-primary',
+    badge: 'Just now',
+    items: [
+      {
+        icon: 'school',
+        iconColor: 'var(--primary)',
+        iconBg: 'bg-primary/10',
+        title: 'Duolingo ABC',
+        time: '10:42 AM',
+        body: 'Leo just completed "The Brave Lion" story! He earned 15 stars for perfect pronunciation.',
+        cardClass: 'bg-white dark:bg-stone-900 shadow-sm',
+      },
+      {
+        icon: 'palette',
+        iconColor: 'var(--primary)',
+        iconBg: 'bg-primary/10',
+        title: 'Art Academy',
+        time: '09:15 AM',
+        body: 'A new masterpiece was saved to the gallery. "Sunset over Mountains" uses beautiful warm tones.',
+        cardClass: 'bg-surface-container-low dark:bg-stone-800',
+      },
+    ],
+  },
+  {
+    label: 'Care & Boundaries',
+    dotColor: 'bg-secondary',
+    items: [
+      {
+        icon: 'timer',
+        iconColor: 'var(--secondary)',
+        iconBg: 'bg-secondary/10',
+        title: 'Screen Guardian',
+        time: '08:00 AM',
+        body: 'Morning focus time has ended. The tablet is now available for educational use.',
+        cardClass: 'bg-white dark:bg-stone-900 shadow-sm border-l-4 border-secondary/20',
+      },
+      {
+        icon: 'health_and_safety',
+        iconColor: 'var(--secondary)',
+        iconBg: 'bg-secondary/10',
+        title: 'Digital Wellbeing',
+        time: 'Yesterday',
+        body: 'Weekly report is ready. Screen time decreased by 12% this week compared to last.',
+        cardClass: 'bg-surface-container-high dark:bg-stone-800',
+      },
+    ],
+  },
+  {
+    label: 'Shared Moments',
+    dotColor: 'bg-tertiary',
+    items: [
+      {
+        icon: 'group',
+        iconColor: 'var(--tertiary)',
+        iconBg: 'bg-tertiary-container/30',
+        title: 'PlayGroup App',
+        time: 'Yesterday',
+        body: "The Friday Nature Walk has been confirmed. Don't forget sturdy boots for the children!",
+        cardClass: 'bg-white dark:bg-stone-900 shadow-sm',
+      },
+    ],
+  },
+];
 
 export default function NotificationsScreen() {
-  const alerts = [
-    { id: '1', type: 'high', title: 'New App Installed', desc: 'TikTok was installed on Leo\'s iPad.', time: '10m ago', color: '#EF4444' },
-    { id: '2', type: 'info', title: 'Daily Report', desc: 'Family screen time reduced by 12% today.', time: '2h ago', color: '#3B82F6' },
-    { id: '3', type: 'safe', title: 'System Synced', desc: 'All devices are up to date and protected.', time: '4h ago', color: '#10B981' },
-  ];
-
   return (
-    <View className="flex-1 bg-[#F8FAFC] dark:bg-black">
+    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 40 }} showsVerticalScrollIndicator={false}>
-          <MotiView
-            from={{ opacity: 0, translateY: -20 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            className="mb-8"
-          >
-            <Text className="text-4xl font-bold text-black dark:text-white mb-2 font-[PlusJakartaSans-Bold]">Alerts</Text>
-            <Text className="text-lg text-gray-500 dark:text-gray-400 font-[Manrope-Regular]">Staying in tune with your family</Text>
-          </MotiView>
-
-          {/* Mood Cloud */}
-          <SanctuaryCard variant="highest" className="mb-8">
-            <Text className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-tighter mb-1">Mood Cloud</Text>
-            <Text className="text-3xl font-bold text-black dark:text-white mb-2 font-[PlusJakartaSans-Bold]">Balance Found</Text>
-            <Text className="text-base text-gray-600 dark:text-gray-400 leading-relaxed font-[Manrope-Regular]">
-              Digital activity is stabilizing. Educational apps are seeing 20% more engagement this morning.
-            </Text>
-          </SanctuaryCard>
-
-          {/* Alert List */}
-          <View className="gap-y-3">
-            {alerts.map((alert, index) => (
-              <MotiView
-                key={alert.id}
-                from={{ opacity: 0, translateX: -20 }}
-                animate={{ opacity: 1, translateX: 0 }}
-                transition={{ type: 'timing', duration: 400, delay: index * 100 }}
-              >
-                <SanctuaryCard variant="low" className="p-4">
-                  <View className="flex-row gap-x-4">
-                    <View className="w-1 rounded-full" style={{ backgroundColor: alert.color }} />
-                    <View className="flex-1">
-                      <View className="flex-row justify-between items-center mb-1">
-                        <Text className="text-lg font-bold text-black dark:text-white font-[PlusJakartaSans-Bold]">{alert.title}</Text>
-                        <Text className="text-xs text-gray-400 font-[Manrope-Regular]">{alert.time}</Text>
-                      </View>
-                      <Text className="text-sm text-gray-600 dark:text-gray-400 leading-snug font-[Manrope-Regular]">
-                        {alert.desc}
-                      </Text>
-                    </View>
-                  </View>
-                </SanctuaryCard>
-              </MotiView>
-            ))}
+        <NurturingHeader />
+        <ScrollView
+          contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 120 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Hero */}
+          <View className="mb-8 text-center items-center pt-2">
+            <ThemedText
+              className="text-3xl font-extrabold tracking-tight text-on-surface mb-1"
+              style={{ fontFamily: 'PlusJakartaSans-Bold' }}
+            >
+              Rhythm of the Day
+            </ThemedText>
+            <ThemedText className="text-on-surface-variant font-medium text-center">
+              A gentle flow of your child's digital world
+            </ThemedText>
           </View>
 
-          <View className="h-[120]" />
+          {/* Notification Feed */}
+          <View className="gap-8">
+            {groups.map((group, gi) => (
+              <View key={gi} className="gap-4">
+                {/* Group header */}
+                <View className="flex-row items-center justify-between px-1">
+                  <View className="flex-row items-center gap-2">
+                    <View className={`w-1.5 h-1.5 rounded-full ${group.dotColor}`} />
+                    <ThemedText
+                      className="text-xs font-bold uppercase tracking-widest text-on-surface-variant opacity-60"
+                      style={{ fontFamily: 'PlusJakartaSans-Bold' }}
+                    >
+                      {group.label}
+                    </ThemedText>
+                  </View>
+                  {group.badge && (
+                    <ThemedText className="text-xs font-semibold text-primary">{group.badge}</ThemedText>
+                  )}
+                </View>
+
+                {/* Items */}
+                {group.items.map((item, ii) => (
+                  <TouchableOpacity
+                    key={ii}
+                    activeOpacity={0.8}
+                    className={`${item.cardClass} rounded-lg p-4 flex-row items-start gap-4`}
+                  >
+                    <View className={`w-12 h-12 rounded-full ${item.iconBg} items-center justify-center flex-shrink-0`}>
+                      <IconSymbol name={item.icon as any} size={22} color={item.iconColor} />
+                    </View>
+                    <View className="flex-1">
+                      <View className="flex-row justify-between items-baseline mb-1">
+                        <ThemedText className="font-bold text-on-surface" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>
+                          {item.title}
+                        </ThemedText>
+                        <ThemedText className="text-[10px] text-on-surface-variant opacity-50 font-bold uppercase">
+                          {item.time}
+                        </ThemedText>
+                      </View>
+                      <ThemedText className="text-on-surface-variant text-sm leading-relaxed">{item.body}</ThemedText>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ))}
+          </View>
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </ThemedView>
   );
 }
