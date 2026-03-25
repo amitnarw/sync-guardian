@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
-import { PillButton } from '@/components/ui/PillButton';
+import { MainButton } from '@/components/ui/MainButton';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -43,9 +43,9 @@ export default function SetupScreen() {
           </View>
         </View>
 
-        <View className="mb-10 gap-5 items-center">
-          <PillButton title="Complete Setup" onPress={() => router.replace('/(tabs)')} />
-          <ThemedText type="link" onPress={() => router.back()}>Back</ThemedText>
+        <View className="mb-10 gap-5 items-center w-full">
+          <MainButton label="Complete Setup" onPress={() => router.replace('/(tabs)')} />
+          <ThemedText type="link" onPress={() => router.back()} className="mt-4 opacity-70">Back</ThemedText>
         </View>
       </SafeAreaView>
     </ThemedView>

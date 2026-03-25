@@ -28,9 +28,16 @@ module.exports = {
         'on-surface': 'var(--on-surface)',
         'on-surface-variant': 'var(--on-surface-variant)',
         'on-primary': 'var(--on-primary)',
+        'on-primary-container': 'var(--on-primary-container)',
         'on-secondary': 'var(--on-secondary)',
         outline: 'var(--outline)',
         'outline-variant': 'var(--outline-variant)',
+        'brand-accent': 'var(--brand-accent)',
+      },
+      borderRadius: {
+        card: 'var(--radius-card)',
+        button: 'var(--radius-button)',
+        sm: 'var(--radius-sm)',
       },
       fontFamily: {
         display: ['PlusJakartaSans-Bold'],

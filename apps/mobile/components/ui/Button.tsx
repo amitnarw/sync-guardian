@@ -58,7 +58,7 @@ export const Button = ({
       <Pressable
         onPress={onPress}
         disabled={disabled}
-        className={`px-6 py-4 rounded-3xl flex-row items-center justify-center ${getVariantStyles()} ${className}`}
+        className={`px-6 py-4 rounded-button flex-row items-center justify-center ${getVariantStyles()} ${className}`}
       >
         {({ pressed }) => (
           <MotiView

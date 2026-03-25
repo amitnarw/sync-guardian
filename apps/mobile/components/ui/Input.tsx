@@ -37,7 +37,7 @@ export const Input = ({
           scale: isFocused ? 1.01 : 1,
         }}
         transition={{ type: "timing", duration: 200 }}
-        className="bg-white dark:bg-[#1C1C1E] rounded-2xl overflow-hidden px-4 py-1"
+        className="bg-white dark:bg-[#1C1C1E] rounded-button overflow-hidden px-4 py-1"
       >
         <TextInput
           value={value}

@@ -22,7 +22,7 @@ export const Card = ({
       from={animate ? { opacity: 0, scale: 0.95, translateY: 10 } : undefined}
       animate={animate ? { opacity: 1, scale: 1, translateY: 0 } : undefined}
       transition={{ type: "timing", duration: 500 }}
-      className={`bg-[#F5F5F7] dark:bg-[#1C1C1E] p-6 rounded-[32px] overflow-hidden ${className}`}
+      className={`bg-[#F5F5F7] dark:bg-[#1C1C1E] p-6 rounded-card overflow-hidden ${className}`}
     >
       {title && (
         <Text className="text-2xl font-bold mb-1 text-black dark:text-white font-[PlusJakartaSans-Bold]">

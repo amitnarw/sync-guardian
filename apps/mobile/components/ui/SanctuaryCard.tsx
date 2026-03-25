@@ -24,7 +24,7 @@ export function SanctuaryCard({ children, variant = 'low', className = "" }: San
       from={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'timing', duration: 400 }}
-      className={`rounded-[32px] p-6 mb-4 ${getBackgroundColor()} ${className}`}
+      className={`rounded-card p-6 mb-4 ${getBackgroundColor()} ${className}`}
     >
       {children}
     </MotiView>

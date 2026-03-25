@@ -8,28 +8,8 @@ import { ThemedView } from '@/components/themed-view';
 import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
 import { NurturingHeader } from '@/components/ui/NurturingHeader';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-
-/**
- * INSIGHTS hearth shape
- * CSS: border-radius: 60% 40% 70% 30% / 40% 50% 60% 70%
- * Horizontal per-corner values for a 256px box:
- *   TL=60%→154, TR=40%→102, BR=70%→179, BL=30%→77
- */
-const I_SIZE = 256;   // outer container
-const I_INNER = 224;  // inset: 256 - 16*2 (inset-4 = 16px each side)
-const I_RADIUS = {
-  borderTopLeftRadius: 154,
-  borderTopRightRadius: 102,
-  borderBottomRightRadius: 179,
-  borderBottomLeftRadius: 77,
-};
-const I_INNER_RADIUS = {
-  borderTopLeftRadius: Math.round(154 * I_INNER / I_SIZE),
-  borderTopRightRadius: Math.round(102 * I_INNER / I_SIZE),
-  borderBottomRightRadius: Math.round(179 * I_INNER / I_SIZE),
-  borderBottomLeftRadius: Math.round(77  * I_INNER / I_SIZE),
-};
-
+import { ScreenWrapper } from '@/components/navigation/ScreenWrapper';
+import { HearthBlob } from '@/components/ui/HearthBlob';
 
 const BAR_HEIGHTS = [0.17, 0.08, 0.13, 0.25, 0.42, 0.67, 1, 0.83, 0.58, 0.42, 0.5, 0.67, 0.92, 0.67, 0.33, 0.5, 0.83, 0.58, 0.42, 0.33, 0.17, 0.25, 0.13, 0.08];
 const FOCUS_BARS = [0.5, 0.67, 0.75, 0.5, 1, 0.67, 0.5];
@@ -44,7 +24,7 @@ export default function InsightsScreen() {
   const heatmapBarW = Math.floor((width - 48 - 23) / 24);
 
   return (
-    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
+    <ScreenWrapper className="bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
         <NurturingHeader />
         <ScrollView
@@ -63,53 +43,12 @@ export default function InsightsScreen() {
               A gentle reflection of digital habits and mindful connections over the last seven days.
             </ThemedText>
 
-            {/* Hearth blob — outer halo + inner gradient shape */}
-            <View style={{ width: I_SIZE, height: I_SIZE, alignItems: 'center', justifyContent: 'center', marginTop: 8 }}>
-              {/* Outer pulsing halo (inset-0, opacity-20, animate-pulse) */}
-              <MotiView
-                from={{ opacity: 0.20 }}
-                animate={{ opacity: 0.08 }}
-                transition={{ type: 'timing', duration: 1500, loop: true }}
-                style={[I_RADIUS, { position: 'absolute', width: I_SIZE, height: I_SIZE, overflow: 'hidden' }]}
-              >
-                <LinearGradient
-                  colors={['#44674d', '#c5eccc']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={StyleSheet.absoluteFillObject}
-                />
-              </MotiView>
-
-              {/* Inner shape (absolute inset-4 = 16px each side) */}
-              <View
-                style={[
-                  I_INNER_RADIUS,
-                  {
-                    position: 'absolute',
-                    width: I_INNER,
-                    height: I_INNER,
-                    overflow: 'hidden',
-                    shadowColor: '#44674d',
-                    shadowOffset: { width: 0, height: 8 },
-                    shadowOpacity: 0.30,
-                    shadowRadius: 20,
-                    elevation: 12,
-                  },
-                ]}
-              >
-                <LinearGradient
-                  colors={['#44674d', '#c5eccc']}
-                  start={{ x: 0, y: 0 }}  // bg-gradient-to-br
-                  end={{ x: 1, y: 1 }}
-                  style={StyleSheet.absoluteFillObject}
-                />
-                <View style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center', gap: 6 }]}>
-                  <IconSymbol name="eco" size={44} color="white" />
-                  <ThemedText style={{ color: 'white', fontSize: 30, fontFamily: 'PlusJakartaSans-Bold', lineHeight: 34 }}>84%</ThemedText>
-                  <ThemedText style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, letterSpacing: 1.5, fontFamily: 'PlusJakartaSans-Bold' }}>CALM ALIGNMENT</ThemedText>
-                </View>
-              </View>
-            </View>
+            {/* Hearth Blob Container — Reusable Component */}
+            <HearthBlob 
+              icon="eco"
+              value="84%"
+              label="CALM ALIGNMENT"
+            />
           </View>
 
           {/* Calm Focus Card */}
@@ -153,24 +92,29 @@ export default function InsightsScreen() {
                 borderColor: '#f5ede0',
               }} />
               {/* Progress: ~57% (120/283 ≈ 42% empty → 58% filled) */}
-              {/* Left half (shows ~180° of the near side) */}
-              <View style={{ position: 'absolute', width: 144, height: 144, overflow: 'hidden' }}>
-                <View style={{
-                  width: 144, height: 144, borderRadius: 72,
-                  borderWidth: 10, borderColor: '#a0412d',
-                  borderRightColor: 'transparent', borderBottomColor: 'transparent',
-                  transform: [{ rotate: '-45deg' }],
-                }} />
-              </View>
-              {/* Right half mask (covers right side partially) */}
-              <View style={{ position: 'absolute', width: 72, height: 144, right: 0, overflow: 'hidden' }}>
-                <View style={{
-                  width: 144, height: 144, borderRadius: 72,
-                  borderWidth: 10, borderColor: '#a0412d',
-                  borderLeftColor: 'transparent', borderTopColor: 'transparent',
-                  transform: [{ rotate: '0deg' }],
-                }} />
-              </View>
+                  <View style={{ position: 'absolute', width: 144, height: 144, overflow: 'hidden' }}>
+                    <View 
+                      className="border-brand-accent"
+                      style={{
+                        width: 144, height: 144, borderRadius: 72,
+                        borderWidth: 10,
+                        borderRightColor: 'transparent', borderBottomColor: 'transparent',
+                        transform: [{ rotate: '-45deg' }],
+                      }} 
+                    />
+                  </View>
+                  {/* Right half mask (covers right side partially) */}
+                  <View style={{ position: 'absolute', width: 72, height: 144, right: 0, overflow: 'hidden' }}>
+                    <View 
+                      className="border-brand-accent"
+                      style={{
+                        width: 144, height: 144, borderRadius: 72,
+                        borderWidth: 10,
+                        borderLeftColor: 'transparent', borderTopColor: 'transparent',
+                        transform: [{ rotate: '0deg' }],
+                      }} 
+                    />
+                  </View>
               <View style={{ position: 'absolute', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemedText className="text-2xl font-bold text-on-surface" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>42</ThemedText>
                 <ThemedText className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Daily Avg</ThemedText>
@@ -202,14 +146,15 @@ export default function InsightsScreen() {
                 return (
                   <View
                     key={i}
-                    style={{ flex: 1, height: h * 72, borderRadius: 2, backgroundColor: isSecondary ? `rgba(160,65,45,${opacity})` : `rgba(68,103,77,${opacity})` }}
+                    className={isSecondary ? "bg-brand-accent" : "bg-tertiary"}
+                    style={{ flex: 1, height: h * 72, borderRadius: 2, opacity }}
                   />
                 );
               })}
             </View>
             <View className="flex-row justify-between mt-2 px-0.5">
-              {['12am', '6am', '12pm', '6pm', '12am'].map((l) => (
-                <ThemedText key={l} className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{l}</ThemedText>
+              {['12am', '6am', '12pm', '6pm', '12am'].map((l, i) => (
+                <ThemedText key={`${l}-${i}`} className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{l}</ThemedText>
               ))}
             </View>
           </SanctuaryCard>
@@ -219,7 +164,7 @@ export default function InsightsScreen() {
             <ThemedText className="text-lg font-bold text-on-surface px-1" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>Nurtured Apps</ThemedText>
             {NURTURED_APPS.map((app, i) => (
               <SanctuaryCard key={i} variant="lowest" className="p-4 flex-row items-center gap-4">
-                <View className={`w-12 h-12 ${app.bg} rounded-lg items-center justify-center`}>
+                <View className={`w-12 h-12 ${app.bg} rounded-sm items-center justify-center`}>
                   <IconSymbol name={app.icon as any} size={22} color={app.color} />
                 </View>
                 <View>
@@ -231,6 +176,6 @@ export default function InsightsScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </ThemedView>
+    </ScreenWrapper>
   );
 }

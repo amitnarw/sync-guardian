@@ -4,53 +4,62 @@
 
 @layer base {
   :root {
-    --background: #fff8f0;
-    --foreground: #363228;
-    --primary: #44674d;
+    --background: #fbfbe2;
+    --foreground: #1b1d0e;
+    --primary: #84A98C;
     --primary-dim: #385b42;
-    --primary-container: #c5eccc;
-    --secondary: #a0412d;
+    --primary-container: #87a96b;
+    --secondary: #9f402d;
     --secondary-dim: #903522;
     --secondary-container: #ffdad3;
     --tertiary: #44674e;
     --tertiary-container: #d3fbda;
-    --surface: #fff8f0;
-    --surface-bright: #fff8f0;
-    --surface-dim: #e1d9ca;
-    --surface-variant: #eae1d2;
+    --surface: #fbfbe2;
+    --surface-bright: #fbfbe2;
+    --surface-dim: #efefd7;
+    --surface-variant: #f5f5dc;
     --surface-container-lowest: #ffffff;
-    --surface-container-low: #faf3e7;
-    --surface-container: #f5ede0;
-    --surface-container-high: #efe7da;
-    --surface-container-highest: #eae1d2;
-    --on-surface: #363228;
-    --on-surface-variant: #645e53;
-    --outline: #807a6d;
-    --outline-variant: #b9b1a3;
+    --surface-container-low: #f5f5dc;
+    --surface-container: #efefd7;
+    --surface-container-high: #eaead1;
+    --surface-container-highest: #e4e4cc;
+    --on-surface: #1b1d0e;
+    --on-surface-variant: #74796c;
+    --on-primary: #fbfbe2;
+    --on-primary-container: #385b42;
+    --outline: #74796c;
+    --outline-variant: #c4c8ba;
+    --brand-accent: #9f402d;
+    --radius-card: 32px;
+    --radius-button: 24px;
+    --radius-sm: 12px;
   }
 
   .dark {
-    --background: #100e09;
-    --foreground: #f5ede0;
-    --primary: #b7debe;
-    --primary-container: #375941;
-    --secondary: #ffc8bc;
-    --secondary-container: #8e3421;
+    --background: #1b1d0e;
+    --foreground: #fbfbe2;
+    --primary: #84A98C;
+    --primary-container: #486730;
+    --secondary: #ffb4a5;
+    --secondary-container: #9f402d;
     --tertiary: #c5eccc;
-    --tertiary-container: #3f6249;
-    --surface: #100e09;
-    --surface-dim: #e1d9ca;
+    --tertiary-container: #486730;
+    --surface: #1b1d0e;
+    --surface-dim: #303221;
     --surface-container-lowest: #000000;
-    --surface-container-low: #1a1b0e;
-    --surface-container: #232d19;
-    --surface-container-high: #2d3824;
-    --surface-container-highest: #38432f;
-    --on-surface: #f5ede0;
-    --on-surface-variant: #b9b1a3;
-    --outline: #807a6d;
+    --surface-container-low: #1b1d0e;
+    --surface-container: #303221;
+    --surface-container-high: #43483d;
+    --surface-container-highest: #43483d;
+    --on-surface: #fbfbe2;
+    --on-surface-variant: #c4c8ba;
+    --on-primary: #1b1d0e;
+    --on-primary-container: #87a96b;
+    --outline: #c4c8ba;
+    --brand-accent: #9f402d;
   }
 }
 
 .hearth-shape {
-  border-radius: 60% 40% 70% 30% / 40% 50% 60% 40%;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 }

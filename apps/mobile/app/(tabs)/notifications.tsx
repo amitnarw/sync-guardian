@@ -5,6 +5,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { NurturingHeader } from '@/components/ui/NurturingHeader';
+import { ScreenWrapper } from '@/components/navigation/ScreenWrapper';
 
 type NotifItem = {
   icon: string;
@@ -92,7 +93,7 @@ const groups: Group[] = [
 
 export default function NotificationsScreen() {
   return (
-    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
+    <ScreenWrapper className="flex-1 bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
         <NurturingHeader />
         <ScrollView
@@ -137,7 +138,7 @@ export default function NotificationsScreen() {
                   <TouchableOpacity
                     key={ii}
                     activeOpacity={0.8}
-                    className={`${item.cardClass} rounded-lg p-4 flex-row items-start gap-4`}
+                    className={`${item.cardClass} rounded-card p-4 flex-row items-start gap-4`}
                   >
                     <View className={`w-12 h-12 rounded-full ${item.iconBg} items-center justify-center flex-shrink-0`}>
                       <IconSymbol name={item.icon as any} size={22} color={item.iconColor} />
@@ -160,6 +161,6 @@ export default function NotificationsScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </ThemedView>
+    </ScreenWrapper>
   );
 }

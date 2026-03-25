@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { PillButton } from '@/components/ui/PillButton';
+import { MainButton } from '@/components/ui/MainButton';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -20,18 +20,19 @@ export default function WelcomeScreen() {
       <SafeAreaView className="flex-1">
         <View className="flex-1 px-8 justify-between pb-10 pt-[10vh]">
           <View className="gap-6">
-            <ThemedText type="display" className="text-[48px] leading-[56px]">Your Digital{"\n"}Sanctuary</ThemedText>
-            <ThemedText type="headline" className="opacity-80 leading-7">
+            <ThemedText className="text-[48px] leading-[56px] font-bold" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>Your Digital{"\n"}Sanctuary</ThemedText>
+            <ThemedText className="opacity-80 leading-7 text-lg">
               A calm, secure space for your family's digital life. Sync, protect, and thrive together.
             </ThemedText>
           </View>
 
           <View className="gap-5 items-center">
-            <PillButton 
-              title="Begin Your Journey" 
+            <MainButton 
+              label="Begin Your Journey" 
+              icon="paperplane.fill"
               onPress={() => router.push('/(onboarding)/setup')} 
             />
-            <ThemedText type="link" className="mt-2" onPress={() => router.replace('/(tabs)')}>
+            <ThemedText type="link" className="mt-4 opacity-80" onPress={() => router.replace('/(tabs)')}>
               Already a Guardian? Sign in
             </ThemedText>
           </View>

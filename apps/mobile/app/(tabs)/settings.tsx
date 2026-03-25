@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/themed-view';
 import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
 import { NurturingHeader } from '@/components/ui/NurturingHeader';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { ScreenWrapper } from '@/components/navigation/ScreenWrapper';
 
 const PARENT_AVATAR = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDPQb5lxw9FNMopXWtHzS7ezCTLNjhGt08cTzxTy-qMiB5S2JfxBi1zpoU1o99jwkynaervk8ELraHHm59-SZvAIX1t5h8H33E_VLB7tP-V1xk6T7LagW1NxohbtIunWLLsatgNSAzy3f-IAWpFAYJ4BELE-bPyEWJlU4pZIN3yiRar5WIxE6HygejNyCPysMmCc8x7iG6YIjILAEW5ToClbbs_e_d7xs9muLUcztGqtZH_9b-dxRpcTTDB-aHEviczH2evXv7nX5A';
 const CHILD_AVATAR = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCurR4XH40Z01u0tqCA7rmHjrvlhqSTCSbg__UGwkervZcTGQyoia3SYT_bqDvFo49SulW7S1IffaIa8F0yhbcuRDx79xMcdGTBwxwr4A_BTWHNdepu6KOnFdAJNz7vpsJaZXRfMCxW0V9J-2xrtoa8g6hVCclDBAKJlodGhGpaohP935-CNMpZUqGjuL0bRdPgij3YL821CeYi4U5msMqjc0OYzryW2-lcVN9XbaIuDn48kljO1I6z6vJEjKaZAHP5Z1G-_C-_FPk';
@@ -66,7 +67,7 @@ function ToggleRow({ row }: { row: Extract<SettingRow, { kind: 'toggle' }> }) {
 
 export default function SettingsScreen() {
   return (
-    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
+    <ScreenWrapper className="flex-1 bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
         <NurturingHeader />
         <ScrollView
@@ -93,7 +94,7 @@ export default function SettingsScreen() {
           </SanctuaryCard>
 
           {/* Child Profile Card */}
-          <View className="bg-surface-container dark:bg-stone-800 rounded-lg p-4 flex-row items-center gap-4 mb-4">
+          <View className="bg-surface-container dark:bg-stone-800 rounded-card p-4 flex-row items-center gap-4 mb-4">
             <View className="relative flex-shrink-0">
               <View className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container">
                 <Image source={{ uri: CHILD_AVATAR }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
@@ -110,7 +111,7 @@ export default function SettingsScreen() {
           </View>
 
           {/* Harmony Score Widget */}
-          <View className="bg-primary rounded-lg p-6 flex-row items-center justify-between mb-6 overflow-hidden">
+          <View className="bg-primary rounded-card p-6 flex-row items-center justify-between mb-6 overflow-hidden">
             <View className="gap-1">
               <ThemedText style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, letterSpacing: 1.5, fontFamily: 'PlusJakartaSans-Bold' }}>
                 FAMILY HARMONY SCORE
@@ -129,7 +130,7 @@ export default function SettingsScreen() {
               <ThemedText className="text-xs font-bold uppercase tracking-widest text-on-surface-variant opacity-60 px-2 mb-2" style={{ fontFamily: 'PlusJakartaSans-Bold' }}>
                 {section.heading}
               </ThemedText>
-              <View className="bg-surface-container-lowest dark:bg-stone-900 rounded-lg overflow-hidden shadow-sm divide-y divide-surface-variant dark:divide-stone-800">
+              <View className="bg-surface-container-lowest dark:bg-stone-900 rounded-card overflow-hidden shadow-sm divide-y divide-surface-variant dark:divide-stone-800">
                 {section.rows.map((row, ri) => (
                   <View key={ri}>
                     {row.kind === 'toggle' && <ToggleRow row={row} />}
@@ -161,6 +162,6 @@ export default function SettingsScreen() {
           ))}
         </ScrollView>
       </SafeAreaView>
-    </ThemedView>
+    </ScreenWrapper>
   );
 }

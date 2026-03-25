@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/themed-view';
 import { SanctuaryCard } from '@/components/ui/SanctuaryCard';
 import { NurturingHeader } from '@/components/ui/NurturingHeader';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { ScreenWrapper } from '@/components/navigation/ScreenWrapper';
 
 type RuleItem = {
   icon: string;
@@ -54,7 +55,7 @@ function RuleToggleRow({ rule }: { rule: RuleItem }) {
 
 export default function RulesScreen() {
   return (
-    <ThemedView className="flex-1 bg-background dark:bg-stone-950">
+    <ScreenWrapper className="flex-1 bg-background dark:bg-stone-950">
       <SafeAreaView edges={['top']} className="flex-1">
         <NurturingHeader />
         <ScrollView
@@ -82,7 +83,7 @@ export default function RulesScreen() {
           {/* Add New Rule */}
           <TouchableOpacity
             activeOpacity={0.7}
-            className="border-2 border-dashed border-outline-variant dark:border-stone-700 rounded-lg p-4 flex-row items-center justify-center gap-3 mb-8 mt-2 bg-surface-container dark:bg-stone-900"
+            className="border-2 border-dashed border-outline-variant dark:border-stone-700 rounded-button p-4 flex-row items-center justify-center gap-3 mb-8 mt-2 bg-surface-container dark:bg-stone-900"
           >
             <IconSymbol name="add_circle" size={22} color="var(--primary)" />
             <ThemedText className="font-semibold text-on-surface-variant">Add a New Rule</ThemedText>
@@ -93,7 +94,7 @@ export default function RulesScreen() {
             Scheduled Boundaries
           </ThemedText>
           {SCHEDULES.map((s, i) => (
-            <View key={i} className="bg-surface-container-low dark:bg-stone-900 rounded-lg p-4 flex-row items-center justify-between mb-3">
+            <View key={i} className="bg-surface-container-low dark:bg-stone-900 rounded-card p-4 flex-row items-center justify-between mb-3">
               <View className="flex-row items-center gap-3">
                 <IconSymbol name={s.icon as any} size={22} color={s.color} />
                 <View>
@@ -108,6 +109,6 @@ export default function RulesScreen() {
           ))}
         </ScrollView>
       </SafeAreaView>
-    </ThemedView>
+    </ScreenWrapper>
   );
 }
