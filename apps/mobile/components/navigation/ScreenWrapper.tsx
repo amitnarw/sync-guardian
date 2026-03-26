@@ -1,7 +1,8 @@
 import React from 'react';
 import { MotiView } from 'moti';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, ViewStyle, View } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 /**
  * ScreenWrapper provides a snappy, modern fade-and-slide transition
@@ -15,6 +16,9 @@ interface ScreenWrapperProps {
 
 export function ScreenWrapper({ children, style, className }: ScreenWrapperProps) {
   const isFocused = useIsFocused();
+  const themeBackground = useThemeColor({}, 'background');
+
+  const backgroundColor = (style as any)?.backgroundColor ?? themeBackground;
 
   return (
     <MotiView
@@ -27,17 +31,21 @@ export function ScreenWrapper({ children, style, className }: ScreenWrapperProps
         opacity: isFocused ? 1 : 0,
         scale: isFocused ? 1 : 0.92,
         translateY: isFocused ? 0 : 20,
+        backgroundColor,
       }}
       transition={{
         type: 'spring',
         damping: 25,
         stiffness: 300,
+        backgroundColor: {
+          type: 'timing',
+          duration: 400,
+        }
       }}
-      style={styles.container}
+      style={[styles.container, style]}
+      className={className}
     >
-      <View className={className} style={[styles.container, style]}>
-        {children}
-      </View>
+      {children}
     </MotiView>
   );
 }

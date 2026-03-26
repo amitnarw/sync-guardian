@@ -7,6 +7,7 @@ module.exports = function (api) {
     ],
     plugins: [
       "react-native-reanimated/plugin",
+      ["@babel/plugin-transform-runtime", { version: "^7.0.0" }],
     ],
   };
 };

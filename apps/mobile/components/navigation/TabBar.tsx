@@ -5,12 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
+  Platform,
 } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { IconSymbol } from "../ui/icon-symbol";
 import { Colors, Fonts } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { MotiView } from "moti";
+import { BlurView } from "expo-blur";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 
@@ -54,11 +56,38 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       style={[
         styles.tabBarContainer,
         {
-          backgroundColor: colorScheme === "dark" ? "#1b1d0e" : "#FFFFFF",
           paddingBottom: Math.max(insets.bottom, 12),
         },
       ]}
     >
+      <BlurView
+        intensity={100}
+        tint={colorScheme === "dark" ? "dark" : "light"}
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            backgroundColor: colorScheme === "dark" ? "rgba(22, 24, 12, 0.45)" : "rgba(255, 255, 255, 0.45)",
+            ...Platform.select({
+              web: {
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                backgroundColor: colorScheme === "dark" ? "rgba(22, 24, 12, 0.45)" : "rgba(255, 255, 255, 0.45)",
+              }
+            })
+          }
+        ]}
+      />
+      
+      {/* Top Border Line */}
+      <View 
+        style={{ 
+          position: 'absolute', 
+          top: 0, left: 0, right: 0, 
+          height: 1.5, 
+          backgroundColor: colorScheme === "dark" ? "rgba(196, 200, 186, 0.2)" : "rgba(116, 121, 108, 0.2)" 
+        }} 
+      />
+
       <View style={[styles.tabContentWrapper, { width: TAB_BAR_WIDTH }]}>
         {/* Fluid Background Indicator */}
         <MotiView
@@ -74,7 +103,9 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             styles.indicator,
             {
               width: TAB_WIDTH,
-              backgroundColor: theme.surfaceContainer,
+              backgroundColor: colorScheme === "dark" 
+                ? "rgba(132, 169, 140, 0.25)" 
+                : "rgba(132, 169, 140, 0.15)",
             },
           ]}
         >
@@ -161,8 +192,6 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 const styles = StyleSheet.create({
   tabBarContainer: {
     paddingTop: 8,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -8 },
     shadowOpacity: 0.08,
@@ -172,6 +201,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
+    borderTopLeftRadius: 36,
+    borderTopRightRadius: 36,
+    overflow: 'hidden',
+    zIndex: 100,
   },
   tabContentWrapper: {
     height: 64,

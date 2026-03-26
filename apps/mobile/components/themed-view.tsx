@@ -1,4 +1,5 @@
-import { View, type ViewProps } from 'react-native';
+import { type ViewProps } from 'react-native';
+import { MotiView } from 'moti';
 
 import { useThemeColor } from '@/hooks/use-theme-color';
 
@@ -11,5 +12,13 @@ export type ThemedViewProps = ViewProps & {
 export function ThemedView({ style, lightColor, darkColor, className, ...otherProps }: ThemedViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
-  return <View style={[{ backgroundColor }, style]} className={className} {...otherProps} />;
+  return (
+    <MotiView 
+      animate={{ backgroundColor }}
+      transition={{ type: 'timing', duration: 400 }}
+      style={[{ backgroundColor }, style]} 
+      className={className} 
+      {...otherProps} 
+    />
+  );
 }

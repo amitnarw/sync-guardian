@@ -1,30 +1,52 @@
-import React from 'react';
-import { MotiView } from 'moti';
+import React from "react";
+import { MotiView } from "moti";
+import { useThemeColor } from "@/hooks/use-theme-color";
 
 interface SanctuaryCardProps {
   children: React.ReactNode;
-  variant?: 'low' | 'high' | 'highest' | 'lowest' | 'container';
+  variant?: "low" | "high" | "highest" | "lowest" | "container";
   className?: string;
 }
 
-export function SanctuaryCard({ children, variant = 'low', className = "" }: SanctuaryCardProps) {
+export function SanctuaryCard({
+  children,
+  variant = "low",
+  className = "",
+}: SanctuaryCardProps) {
+  const low = useThemeColor({}, "surfaceContainerLow");
+  const container = useThemeColor({}, "surfaceContainer");
+  const high = useThemeColor({}, "surfaceContainerHigh");
+  const highest = useThemeColor({}, "surfaceContainerHighest");
+  const lowest = useThemeColor({}, "surfaceContainerLowest");
+
   const getBackgroundColor = () => {
     switch (variant) {
-      case 'low': return 'bg-surface-container-low';
-      case 'container': return 'bg-surface-container';
-      case 'high': return 'bg-surface-container-high';
-      case 'highest': return 'bg-surface-container-highest';
-      case 'lowest': return 'bg-surface-container-lowest';
-      default: return 'bg-surface-container-low';
+      case "low": return low;
+      case "container": return container;
+      case "high": return high;
+      case "highest": return highest;
+      case "lowest": return lowest;
+      default: return low;
     }
   };
+
+  const backgroundColor = getBackgroundColor();
 
   return (
     <MotiView
       from={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'timing', duration: 400 }}
-      className={`rounded-card p-6 mb-4 ${getBackgroundColor()} ${className}`}
+      animate={{ 
+        opacity: 1, 
+        scale: 1,
+        backgroundColor: backgroundColor
+      }}
+      transition={{ 
+        opacity: { type: 'timing', duration: 400 },
+        scale: { type: 'timing', duration: 400 },
+        backgroundColor: { type: 'timing', duration: 300 }
+      }}
+      className={`rounded-card p-6 mb-4 ${className}`}
+      style={{ backgroundColor }}
     >
       {children}
     </MotiView>

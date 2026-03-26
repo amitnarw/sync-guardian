@@ -56,10 +56,17 @@
     --on-primary: #1b1d0e;
     --on-primary-container: #87a96b;
     --outline: #c4c8ba;
+    --outline-variant: #43483d;
+    --surface-variant: #303221;
     --brand-accent: #9f402d;
   }
 }
 
 .hearth-shape {
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.glass-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }

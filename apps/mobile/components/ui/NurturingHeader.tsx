@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { DarkModeToggle } from '@/components/ui/DarkModeToggle';
 import { useThemeColor } from '@/hooks/use-theme-color';
@@ -9,7 +10,11 @@ export function NurturingHeader() {
   const primary = useThemeColor({}, 'primary');
 
   return (
-    <View className="flex-row items-center justify-between px-6 py-4 bg-surface/80 shadow-sm shadow-on-surface/5">
+    <ThemedView 
+      lightColor="rgba(251, 251, 226, 0.8)" 
+      darkColor="rgba(27, 29, 14, 0.8)"
+      className="flex-row items-center justify-between px-6 py-4 shadow-sm shadow-on-surface/5"
+    >
       <View className="flex-row items-center gap-3">
         <View className="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
           <Image
@@ -29,6 +34,6 @@ export function NurturingHeader() {
           <IconSymbol name="notifications_active" size={24} color={primary} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ThemedView>
   );
 }
