@@ -29,12 +29,18 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
   const getIconName = (name: string) => {
     switch (name) {
-      case "index": return "dashboard";
-      case "notifications": return "analytics";
-      case "insights": return "insights";
-      case "rules": return "gavel";
-      case "settings": return "settings";
-      default: return "dashboard";
+      case "index":
+        return "dashboard";
+      case "notifications":
+        return "analytics";
+      case "insights":
+        return "insights";
+      case "rules":
+        return "gavel";
+      case "settings":
+        return "settings";
+      default:
+        return "dashboard";
     }
   };
 
@@ -52,137 +58,140 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   };
 
   return (
-    <View
-      style={[
-        styles.tabBarContainer,
-        {
-          paddingBottom: Math.max(insets.bottom, 12),
-        },
-      ]}
-    >
-      <BlurView
-        intensity={100}
-        tint={colorScheme === "dark" ? "dark" : "light"}
+    <View style={styles.tabBarWrapper}>
+      <View
         style={[
-          StyleSheet.absoluteFill,
+          styles.tabBarContainer,
           {
-            backgroundColor: colorScheme === "dark" ? "rgba(22, 24, 12, 0.45)" : "rgba(255, 255, 255, 0.45)",
-            ...Platform.select({
-              web: {
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-                backgroundColor: colorScheme === "dark" ? "rgba(22, 24, 12, 0.45)" : "rgba(255, 255, 255, 0.45)",
-              }
-            })
-          }
+            paddingBottom: Math.max(insets.bottom, 12),
+          },
         ]}
-      />
-      
-      {/* Top Border Line */}
-      <View 
-        style={{ 
-          position: 'absolute', 
-          top: 0, left: 0, right: 0, 
-          height: 1.5, 
-          backgroundColor: colorScheme === "dark" ? "rgba(196, 200, 186, 0.2)" : "rgba(116, 121, 108, 0.2)" 
-        }} 
-      />
-
-      <View style={[styles.tabContentWrapper, { width: TAB_BAR_WIDTH }]}>
-        {/* Fluid Background Indicator */}
-        <MotiView
-          animate={{
-            translateX: state.index * TAB_WIDTH,
-          }}
-          transition={{
-            type: "spring",
-            damping: 20,
-            stiffness: 300,
-          }}
+      >
+        <BlurView
+          experimentalBlurMethod="dimezisBlurView"
+          intensity={100}
+          tint={colorScheme === "dark" ? "dark" : "light"}
+          style={StyleSheet.absoluteFill}
+        />
+        <View
           style={[
-            styles.indicator,
+            StyleSheet.absoluteFill,
             {
-              width: TAB_WIDTH,
-              backgroundColor: colorScheme === "dark" 
-                ? "rgba(132, 169, 140, 0.25)" 
-                : "rgba(132, 169, 140, 0.15)",
+              backgroundColor:
+                colorScheme === "dark"
+                  ? "rgba(27, 29, 14, 0.65)" /* theme.surface dark */
+                  : "rgba(255, 248, 240, 0.65)", /* theme.surface light */
+              ...Platform.select({
+                web: {
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                },
+              }),
             },
           ]}
-        >
-          {/* Subtle Glow/Inner shadow effect for active indicator */}
-          <MotiView 
-             animate={{ opacity: [0.1, 0.2, 0.1] }}
-             transition={{ loop: true, duration: 2000 }}
-             style={{ 
-               position: 'absolute', 
-               top: 0, left: 0, right: 0, bottom: 0, 
-               borderRadius: 24, 
-               borderWidth: 1.2, 
-               borderColor: theme.primary,
-               opacity: 0.1
-             }} 
-          />
-        </MotiView>
+        />
 
-        {/* Interaction Layer */}
-        <View style={styles.tabItemsContainer}>
-          {state.routes.map((route, index) => {
-            const { options } = descriptors[route.key];
-            const label = options.title !== undefined ? options.title : route.name;
-            const isFocused = state.index === index;
+        <View style={[styles.tabContentWrapper, { width: TAB_BAR_WIDTH }]}>
+          {/* Fluid Background Indicator */}
+          <MotiView
+            animate={{
+              translateX: state.index * TAB_WIDTH,
+            }}
+            transition={{
+              type: "spring",
+              damping: 20,
+              stiffness: 300,
+            }}
+            style={[
+              styles.indicator,
+              {
+                width: TAB_WIDTH,
+                backgroundColor:
+                  colorScheme === "dark"
+                    ? "rgba(132, 169, 140, 0.25)"
+                    : "rgba(132, 169, 140, 0.15)",
+              },
+            ]}
+          >
+            {/* Subtle Glow/Inner shadow effect for active indicator */}
+            <MotiView
+              animate={{ opacity: [0.1, 0.2, 0.1] }}
+              transition={{ loop: true, duration: 2000 }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: 24,
+                borderWidth: 1.2,
+                borderColor: theme.primary,
+                opacity: 0.1,
+              }}
+            />
+          </MotiView>
 
-            return (
-              <TouchableOpacity
-                key={route.key}
-                onPress={() => handlePress(route, isFocused)}
-                style={[styles.tabItem, { width: TAB_WIDTH }]}
-                activeOpacity={1}
-              >
-                <MotiView
-                  animate={{
-                    scale: isFocused ? 1.15 : 1,
-                    translateY: isFocused ? -3 : 0,
-                  }}
-                  transition={{
-                    type: "spring",
-                    damping: 15,
-                    stiffness: 350,
-                  }}
-                  style={styles.iconContainer}
+          {/* Interaction Layer */}
+          <View style={styles.tabItemsContainer}>
+            {state.routes.map((route, index) => {
+              const { options } = descriptors[route.key];
+              const label =
+                options.title !== undefined ? options.title : route.name;
+              const isFocused = state.index === index;
+
+              return (
+                <TouchableOpacity
+                  key={route.key}
+                  onPress={() => handlePress(route, isFocused)}
+                  style={[styles.tabItem, { width: TAB_WIDTH }]}
+                  activeOpacity={1}
                 >
-                  <IconSymbol
-                    name={getIconName(route.name) as any}
-                    color={
-                      isFocused ? theme.tabIconSelected : theme.tabIconDefault
-                    }
-                    size={22}
-                  />
-                </MotiView>
-                
-                <MotiView
-                   animate={{
-                     opacity: isFocused ? 1 : 0.6,
-                   }}
-                >
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.label,
-                      {
-                        color: isFocused
-                          ? theme.tabIconSelected
-                          : theme.tabIconDefault,
-                        fontFamily: Fonts.title,
-                        fontWeight: isFocused ? "900" : "600",
-                      },
-                    ]}
+                  <MotiView
+                    animate={{
+                      scale: isFocused ? 1.15 : 1,
+                      translateY: isFocused ? -3 : 0,
+                    }}
+                    transition={{
+                      type: "spring",
+                      damping: 15,
+                      stiffness: 350,
+                    }}
+                    style={styles.iconContainer}
                   >
-                    {label.toUpperCase()}
-                  </Text>
-                </MotiView>
-              </TouchableOpacity>
-            );
-          })}
+                    <IconSymbol
+                      name={getIconName(route.name) as any}
+                      color={
+                        isFocused ? theme.tabIconSelected : theme.tabIconDefault
+                      }
+                      size={22}
+                    />
+                  </MotiView>
+
+                  <MotiView
+                    animate={{
+                      opacity: isFocused ? 1 : 0.6,
+                    }}
+                  >
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.label,
+                        {
+                          color: isFocused
+                            ? theme.tabIconSelected
+                            : theme.tabIconDefault,
+                          fontFamily: Fonts.title,
+                          fontWeight: isFocused ? "900" : "600",
+                        },
+                      ]}
+                    >
+                      {label.toUpperCase()}
+                    </Text>
+                  </MotiView>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
       </View>
     </View>
@@ -190,42 +199,46 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 }
 
 const styles = StyleSheet.create({
+  tabBarWrapper: {
+    shadowColor: "#363228", /* Deep Umber for Ambient Shadow */
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 40,
+    elevation: 10,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    zIndex: 100,
+    backgroundColor: "transparent",
+  },
   tabBarContainer: {
     paddingTop: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 16,
-    elevation: 20,
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    alignItems: "center",
+    width: "100%",
     borderTopLeftRadius: 36,
     borderTopRightRadius: 36,
-    overflow: 'hidden',
-    zIndex: 100,
+    overflow: "hidden",
   },
   tabContentWrapper: {
     height: 64,
-    position: 'relative',
+    position: "relative",
     marginTop: 4,
   },
   indicator: {
-     position: 'absolute',
-     height: 52, 
-     top: 6,
-     borderRadius: 24,
-     zIndex: 0,
+    position: "absolute",
+    height: 52,
+    top: 6,
+    borderRadius: 24,
+    zIndex: 0,
   },
   tabItemsContainer: {
     flexDirection: "row",
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
     zIndex: 1,
   },
   tabItem: {
-    height: '100%',
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },

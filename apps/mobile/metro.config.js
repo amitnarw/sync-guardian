@@ -18,12 +18,12 @@ config.resolver.nodeModulesPaths = [
 
 config.resolver.disableHierarchicalLookup = false;
 
-// 3. Enable Package Exports for better ESM/CJS interop in web bundles
-config.resolver.unstable_enablePackageExports = true;
+// 3. Disable Package Exports to avoid tslib ESM/CJS interop issues in web bundles
+config.resolver.unstable_enablePackageExports = false;
 
-// 4. Force tslib resolution to the root nodeModules to avoid version conflicts
+// 4. Force tslib resolution to the shim to avoid version conflicts and fix ESM/CJS interop
 config.resolver.extraNodeModules = {
-  tslib: path.resolve(workspaceRoot, 'node_modules/tslib'),
+  tslib: path.resolve(projectRoot, 'tslib-shim.js'),
 };
 
 module.exports = withNativeWind(config, { input: './global.css' });

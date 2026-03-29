@@ -38,6 +38,9 @@ module.exports = {
         card: 'var(--radius-card)',
         button: 'var(--radius-button)',
         sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        full: '9999px',
       },
       fontFamily: {
         display: ['PlusJakartaSans-Bold'],

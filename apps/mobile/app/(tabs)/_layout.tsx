@@ -13,6 +13,7 @@ export default function TabLayout() {
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: { position: 'absolute' },
         tabBarActiveTintColor: theme.tint,
         tabBarInactiveTintColor: theme.icon,
       }}>

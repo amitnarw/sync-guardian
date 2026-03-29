@@ -19,8 +19,8 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-  'sun.max.fill': 'light-mode',
-  'moon.fill': 'dark-mode',
+  'sun.max.fill': 'wb-sunny',
+  'moon.fill': 'bedtime',
   'moon.zzz.fill': 'nights-stay',
   'heart.fill': 'favorite',
   'thermometer.medium': 'device-thermostat',
@@ -63,6 +63,8 @@ const MAPPING = {
   'verified_user': 'verified-user',
   'battery_charging_80': 'battery-charging-full',
   'location_on': 'place',
+  'spa': 'spa',
+  'nest_eco_leaf': 'eco',
 } as IconMapping;
 
 cssInterop(MaterialIcons, {
